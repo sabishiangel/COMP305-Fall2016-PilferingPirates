@@ -17,7 +17,6 @@ public class BackgroundController : MonoBehaviour {
                                        // Use this for initialization
     void Start () {
         this._transform = this.GetComponent<Transform>();//storing transformations from object into '_transform'; keeps track of position in every frame
-        this._speed = 3; //sets background drop rate to _px per frame
 	}
 	
 	// Update is called once per frame
@@ -28,9 +27,25 @@ public class BackgroundController : MonoBehaviour {
 
     private void _Move()
     {
-        Vector2 newPosition = this.transform.position; //Old position and new position are equal; must use vector(can be temporary) to modify transform components
-        newPosition.y -= this._speed; //brings the image downwards every fram
-        this._transform.position = newPosition; //resets so that it can continue bringing the image down
+
+        if (Input.GetKey(KeyCode.UpArrow)) //allows player to choose to move forward
+        {
+            Vector2 newPosition = this.transform.position; //Old position and new position are equal; must use vector(can be temporary) to modify transform components
+            newPosition.y -= this._speed; //brings the image downwards every fram
+            this._transform.position = newPosition; //resets so that it can continue bringing the image down
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow)) //allows player to move backward
+        {
+            if (this._transform.position.y <= 775f) //prevents too much back-scrolling
+                    {
+                Vector2 newPosition = this.transform.position; //Old position and new position are equal; must use vector(can be temporary) to modify transform components
+                newPosition.y += this._speed; //brings the image up every fram
+                this._transform.position = newPosition; //resets so that it can continue bringing the image down
+            }
+
+        }
+
     }
 
     //The following method checks if the top of the game object meets the top border of the screen
