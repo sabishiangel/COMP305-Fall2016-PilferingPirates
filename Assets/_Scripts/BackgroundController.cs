@@ -28,14 +28,14 @@ public class BackgroundController : MonoBehaviour {
     private void _Move()
     {
 
-        if (Input.GetKey(KeyCode.UpArrow)) //allows player to choose to move forward
+        if (Input.GetKey(KeyCode.UpArrow)) //
         {
             Vector2 newPosition = this.transform.position; //Old position and new position are equal; must use vector(can be temporary) to modify transform components
             newPosition.y -= this._speed; //brings the image downwards every fram
             this._transform.position = newPosition; //resets so that it can continue bringing the image down
         }
 
-        if (Input.GetKey(KeyCode.DownArrow)) //allows player to move backward
+        if (Input.GetKey(KeyCode.DownArrow)) //
         {
             if (this._transform.position.y <= 775f) //prevents too much back-scrolling
                     {
