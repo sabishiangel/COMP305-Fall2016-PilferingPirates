@@ -12,7 +12,6 @@ public class CodrinController : MonoBehaviour
     private Transform _transform;
 
     //Public Instance Variables
-    public GameController gameController;
     public Transform player;
 
     //Public Properties

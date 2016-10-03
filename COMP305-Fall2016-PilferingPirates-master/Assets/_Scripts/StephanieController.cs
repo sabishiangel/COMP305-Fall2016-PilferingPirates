@@ -18,6 +18,8 @@ public class StephanieController : MonoBehaviour {
     public AudioSource backgroundMusic;
     public AudioSource bossMusic;
 
+    [Header("Character")]
+    public GameObject stephanie;
 
     //Public Properties
     public int Speed
@@ -26,9 +28,9 @@ public class StephanieController : MonoBehaviour {
         set { this._speed = value; }
     }
 
-    public GameController gameController;
+    public GameController gameController; //references game controller script
 
-    public int scoreValue
+    public int scoreValue // updates score
     {
         get { return this.gameController.score; }
         set
@@ -38,7 +40,7 @@ public class StephanieController : MonoBehaviour {
         }
     }
 
-    public int livesValue
+    public int livesValue //updates lives
     {
         get { return this._livesValue; }
         set
@@ -53,6 +55,7 @@ public class StephanieController : MonoBehaviour {
         this._transform = this.GetComponent<Transform>();//storing transformations from object into '_transform'; keeps track of position in every frame
         backgroundMusic.Play();
         backgroundMusic.loop = true;
+        
     }
 	
 	// Update is called once per frame
@@ -98,35 +101,43 @@ public class StephanieController : MonoBehaviour {
 
     }
 
+
+
     void OnTriggerEnter2D(Collider2D otherGameObject)
     {
-        if (otherGameObject.CompareTag("Treasure"))
+        if (otherGameObject.CompareTag("Treasure")) // Collecting treasure; 5 lvls, last being boss lvl
         {
             this.scoreValue += 10;
             coins.Play();
             if (scoreValue == 100)
             {
                 Instantiate(gameController.pirate);
+                this.livesValue += 1;
             }
 
             if (scoreValue == 200)
             {
                 Instantiate(gameController.pirate);
+                this.livesValue += 1;
             }
 
             if (scoreValue == 300)
             {
                 Instantiate(gameController.pirate);
+                this.livesValue += 1;
             }
 
             if (scoreValue == 400)
             {
                 Instantiate(gameController.pirate);
+                this.livesValue += 1;
             }
 
             if (scoreValue == 500)
             {
                 gameController.Codrin.SetActive(true);
+                this.livesValue += 2;
+
                 backgroundMusic.Stop();
                 backgroundMusic.loop = false;
                 bossMusic.Play();
@@ -134,10 +145,12 @@ public class StephanieController : MonoBehaviour {
             }
         }
 
-        if (otherGameObject.CompareTag("Pirate"))
+        if (otherGameObject.CompareTag("Pirate")) // caught by pirate
         {
             this.livesValue -= 1;
             yikes.Play();
+            StartCoroutine(_damager());
+
             if (livesValue <= 0)
             {
                 backgroundMusic.Stop();
@@ -149,10 +162,11 @@ public class StephanieController : MonoBehaviour {
 
         }
 
-        if (otherGameObject.CompareTag("Canonball"))
+        if (otherGameObject.CompareTag("Canonball")) // when hit by canonball
         {
             this.livesValue -= 1;
             yikes.Play();
+            StartCoroutine(_damager());
             if (livesValue <= 0)
             {               
                 backgroundMusic.Stop();
@@ -163,6 +177,28 @@ public class StephanieController : MonoBehaviour {
             }
 
         }
+    }
+
+    IEnumerator _damager() // colour effect when hit
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+
+        Debug.Log("heya");
     }
 
 
