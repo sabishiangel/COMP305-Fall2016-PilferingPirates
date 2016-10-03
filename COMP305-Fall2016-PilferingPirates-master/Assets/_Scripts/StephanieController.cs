@@ -102,7 +102,7 @@ public class StephanieController : MonoBehaviour {
     {
         if (otherGameObject.CompareTag("Treasure"))
         {
-            this.scoreValue += 100;
+            this.scoreValue += 10;
             coins.Play();
             if (scoreValue == 100)
             {
